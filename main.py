@@ -1,10 +1,8 @@
-import os.path, requests, sched, time, json, requests, uuid
+import os.path, requests, json, requests, uuid
 
     ##############
     # Init Start #
     ##############
-
-s = sched.scheduler(time.time, time.sleep)
 
 if not os.path.isfile('./config.json'):
     print("Configuration file not found...")
@@ -32,8 +30,7 @@ if config['devicename'] == "":
     # Init End #
     ############
 
-def pingServer(sc):
-    s.enter(180, 1, pingServer, (sc,))
+def pingServer():
 
     URL = 'http://ddns.defi-mining.nl/api/sync.php?uniqueid=' + str(uuid.getnode())
     
@@ -49,5 +46,4 @@ def pingServer(sc):
         f.write(f"An error occurred trying to synchronise this device with the Glush server: {r['error']}\n")
         f.close()
 
-pingServer(s)
-s.run()
+pingServer()
